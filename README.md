@@ -17,6 +17,33 @@ Have a Redis running on port 6379. All your base are belong to us.
     yarn start
     yarn test
 
+## API
+
+### POST `/api/v1/messages`
+
+Body:
+
+```json
+{
+    "customer": "leonidas.platform",
+    "message": "Hello, World!",
+    "recipient": "+3585551235",
+    "sender": "+3585551234"
+}
+```
+
+Empty 204 response indicates successful sending.
+
+### GET `/metrics`
+
+Response:
+
+```
+# HELP smsgw_messages Sent SMS messages by customer
+# TYPE smsgw_messages counter
+smsgw_messages{customer0="leonidas"} 0
+```
+
 ## TODO
 
 ### Untyped packages

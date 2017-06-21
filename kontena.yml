@@ -6,6 +6,8 @@ services:
     instances: 1
     environment:
       NODE_ENV: production
+      SMSGW_BACKEND: labyrintti
+      SMSGW_REDIS_HOST: redis
 
       KONTENA_LB_MODE: http
       KONTENA_LB_BALANCE: roundrobin

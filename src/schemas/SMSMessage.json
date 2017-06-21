@@ -8,8 +8,11 @@
         "message": {
             "type": "string"
         },
-        "recipient": {
-            "type": "string"
+        "recipients": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
         },
         "sender": {
             "type": "string"
@@ -18,7 +21,7 @@
     "required": [
         "customer",
         "message",
-        "recipient",
+        "recipients",
         "sender"
     ],
     "type": "object"

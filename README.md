@@ -27,7 +27,7 @@ Body:
 {
     "customer": "leonidas.platform",
     "message": "Hello, World!",
-    "recipient": "+3585551235",
+    "recipients": ["+3585551235"],
     "sender": "+3585551234"
 }
 ```

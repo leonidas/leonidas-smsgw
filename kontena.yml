@@ -1,0 +1,22 @@
+stack: santtu-pajukanta-leonidas/smsgw
+version: '0.1.0'
+services:
+  api:
+    image: registry.plat2.leonidasoy.fi/leonidas-smsgw
+    instances: 1
+    environment:
+      NODE_ENV: production
+
+      KONTENA_LB_MODE: http
+      KONTENA_LB_BALANCE: roundrobin
+      KONTENA_LB_INTERNAL_PORT: 3000
+      KONTENA_LB_VIRTUAL_HOSTS: smsgw.leonidasoy.fi
+      KONTENA_LB_CUSTOM_SETTINGS: |
+        redirect scheme https if !{ ssl_fc }
+        http-response set-header Strict-Transport-Security max-age=16000000;\ includeSubDomains;\ preload;
+    links:
+      - platform/lb1
+      - redis
+  redis:
+    image: redis
+    stateful: true

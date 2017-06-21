@@ -1,0 +1,63 @@
+{
+  "name": "leonidas-smsgw",
+  "version": "0.0.0",
+  "description": "From REST to ElasticSearch",
+  "main": "index.js",
+  "scripts": {
+    "start": "pm2 start --no-daemon --watch src/ index.js",
+    "test": "mocha --register ts-node/register src/**/*.test.ts",
+    "generate-schemas-doesnt-work-please-fix": "ts-node src/scripts/generate-schemas.ts",
+    "generate-schemas": "typescript-json-schema --required --noExtraProps ./tsconfig.json SMSMessage > src/schemas/SMSMessage.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonidas/leonidas-smsgw.git"
+  },
+  "author": "Santtu Pajukanta <santtu.pajukanta@leonidasoy.fi>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/leonidas/leonidas-smsgw/issues"
+  },
+  "homepage": "https://github.com/leonidas/leonidas-smsgw#readme",
+  "devDependencies": {
+    "@types/koa": "^2.0.39",
+    "@types/koa-bodyparser": "^3.0.23",
+    "@types/koa-router": "^7.0.22",
+    "@types/node": "^7.0.31",
+    "@types/supertest": "^2.0.0",
+    "@types/winston": "^2.2.0",
+    "@types/mocha": "^2.2.41",
+    "@types/redis": "^2.6.0",
+    "supertest": "^3.0.0",
+    "tslint": "^5.4.3",
+    "typescript-json-schema": "^0.13.0",
+    "mocha": "^3.4.2"
+  },
+  "dependencies": {
+    "add": "^2.0.6",
+    "babel-register": "^6.22.0",
+    "babel-runtime": "^6.22.0",
+    "fluent-logger": "^2.2.0",
+    "jsonschema": "https://github.com/japsu/jsonschema",
+    "koa": "2.2.0",
+    "koa-bodyparser": "4.2.0",
+    "koa-request-logger": "^1.2.0",
+    "koa-router": "7.2.0",
+    "redis": "^2.7.1",
+    "ts-node": "^3.0.6",
+    "typescript": "^2.3.4",
+    "winston": "^2.3.1",
+    "winston-console-formatter": "^0.3.1"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}

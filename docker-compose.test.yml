@@ -1,0 +1,24 @@
+version: '2'
+services:
+  test:
+    build: .
+    image: registry.plat2.leonidasoy.fi/leonidas-smsgw
+    command: node_modules/.bin/mocha --compilers ts:ts-node/register src/**/*.test.ts
+    ports:
+      - 3000:3000
+    links:
+      - redis
+    volumes:
+      - ./src:/usr/src/app/src
+    environment:
+      NODE_ENV: test
+      SMSGW_REDIS_HOST: redis
+      SMSGW_REDIS_DB: 1
+      SMSGW_REDIS_PREFIX: tesmsgw
+  redis:
+    image: redis
+    volumes:
+      - redis-data:/data
+volumes:
+  redis-data:
+    driver: local

@@ -1,0 +1,21 @@
+version: '2'
+services:
+  api:
+    build: .
+    image: registry.plat2.leonidasoy.fi/leonidas-smsgw
+    command: node index.js
+    ports:
+      - 3000:3000
+    links:
+      - redis
+    volumes:
+      - ./src:/usr/src/app/src
+    environment:
+      SMSGW_REDIS_HOST: redis
+  redis:
+    image: redis
+    volumes:
+      - redis-data:/data
+volumes:
+  redis-data:
+    driver: local

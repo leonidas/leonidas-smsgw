@@ -6,7 +6,13 @@ type Backend = 'labyrintti' | 'mock';
 
 
 interface Config {
-  backend: Backend,
+  backend: Backend;
+
+  /**
+   * At least this customer will always be present in the /metrics output.
+   */
+  defaultCustomer: string;
+
   listen: {
     port: number;
     address: string;
@@ -27,6 +33,7 @@ function makeConfig(env: typeof process.env = process.env): Config {
 
   return {
     backend: process.env.SMSGW_BACKEND || 'mock',
+    defaultCustomer: process.env.SMSGW_DEFAULT_CUSTOMER || 'leonidas',
     listen: {
       address: process.env.SMSGW_LISTEN_ADDRESS || '127.0.0.1',
       port: parseInt(process.env.SMSGW_LISTEN_PORT || '3000', 10),

@@ -12,5 +12,10 @@ describe('/metrics', () => {
 
       assert(response.text.indexOf('smsgw_messages{customer0="leonidas", customer1="platform"} 2') >= 0);
     });
+
+    it('shall work even if there are no messages', async () => {
+      const response = await request().get('/metrics').expect(200);
+      assert(response.text.indexOf('smsgw_messages{customer0="leonidas"} 0') >= 0);
+    });
   });
 });

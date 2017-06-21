@@ -95,6 +95,7 @@
             "check-type",
             "check-typecast"
         ],
-        "only-arrow-functions": [ false ]
+        "only-arrow-functions": [ false ],
+        "prefer-object-spread": false
     }
 }

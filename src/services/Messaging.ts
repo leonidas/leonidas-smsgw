@@ -6,5 +6,5 @@ import Config from '../Config';
 
 const backends = { labyrintti, mock };
 
-export const sendMessage = backends[Config.backend];
+export const sendMessage = backends[Config.defaultBackend];
 export default sendMessage;

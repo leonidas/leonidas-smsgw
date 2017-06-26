@@ -5,8 +5,19 @@ type NodeEnv = 'development' | 'production' | 'test';
 type Backend = 'labyrintti' | 'mock';
 
 
+export interface LabyrinttiConfig {
+  baseUrl: string;
+  username: string;
+  password: string;
+}
+
+
 interface Config {
-  backend: Backend;
+  backends: {
+    labyrintti: LabyrinttiConfig;
+  };
+
+  defaultBackend: Backend;
 
   /**
    * At least this customer will always be present in the /metrics output.
@@ -32,7 +43,14 @@ function makeConfig(env: typeof process.env = process.env): Config {
   const nodeEnv: NodeEnv = process.env.NODE_ENV || 'development';
 
   return {
-    backend: process.env.SMSGW_BACKEND || 'mock',
+    backends: {
+      labyrintti: {
+        baseUrl: process.env.SMSGW_LABYRINTTI_BASE_URL || 'https://gw.labyrintti.com:28443',
+        password: process.env.SMSGW_LABYRINTTI_PASSWORD,
+        username: process.env.SMSGW_LABYRINTTI_USERNAME,
+      },
+    },
+    defaultBackend: process.env.SMSGW_DEFAULT_BACKEND || 'mock',
     defaultCustomer: process.env.SMSGW_DEFAULT_CUSTOMER || 'leonidas',
     listen: {
       address: process.env.SMSGW_LISTEN_ADDRESS || '127.0.0.1',

@@ -24,6 +24,11 @@ interface Config {
    */
   defaultCustomer: string;
 
+  /**
+   * Sent as the sender number unless specified in the message.
+   */
+  defaultSender: string;
+
   listen: {
     port: number;
     address: string;
@@ -46,12 +51,13 @@ function makeConfig(env: typeof process.env = process.env): Config {
     backends: {
       labyrintti: {
         baseUrl: process.env.SMSGW_LABYRINTTI_BASE_URL || 'https://gw.labyrintti.com:28443',
-        password: process.env.SMSGW_LABYRINTTI_PASSWORD,
-        username: process.env.SMSGW_LABYRINTTI_USERNAME,
+        password: process.env.SMSGW_LABYRINTTI_PASSWORD || 'testpassword',
+        username: process.env.SMSGW_LABYRINTTI_USERNAME || 'testuser',
       },
     },
     defaultBackend: process.env.SMSGW_DEFAULT_BACKEND || 'mock',
     defaultCustomer: process.env.SMSGW_DEFAULT_CUSTOMER || 'leonidas',
+    defaultSender: process.env.SMSGW_DEFAULT_SENDER || '0',
     listen: {
       address: process.env.SMSGW_LISTEN_ADDRESS || '127.0.0.1',
       port: parseInt(process.env.SMSGW_LISTEN_PORT || '3000', 10),

@@ -1,5 +1,8 @@
 import * as assert from 'assert';
-import { handleResultLine } from '.';
+import * as querystring from 'querystring';
+
+import { handleResultLine, makeFetchOptions } from '.';
+import { message } from '../../helpers/test';
 
 
 describe('handleResultLine', () => {
@@ -32,5 +35,22 @@ describe('handleResultLine', () => {
     };
     const actual = handleResultLine(example);
     assert.deepEqual(actual, expected);
+  });
+});
+
+
+describe('makeFetchOptions', () => {
+  it('turns a message into fetch options', () => {
+    const actual = makeFetchOptions(message);
+    assert.equal(actual.method, 'POST');
+
+    const decodedForm = querystring.parse(actual.body);
+    assert.deepEqual(decodedForm, {
+      dests: '+3585551235',
+      user: 'testuser',
+      password: 'testpassword',
+      source: '+3585551234',
+      text: 'Hello, World!',
+    });
   });
 });

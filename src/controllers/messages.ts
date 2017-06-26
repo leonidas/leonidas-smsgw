@@ -6,6 +6,7 @@ import { validate } from '../middleware/validation';
 import SMSMessage from '../models/SMSMessage';
 import { recordMessage } from '../services/Accounting';
 import { sendMessage } from '../services/Messaging';
+import Config from '../Config';
 
 
 const messageSchema = require('../schemas/SMSMessage.json');
@@ -16,9 +17,12 @@ export async function postMessage(ctx: Koa.Context) {
 
   const message: SMSMessage = ctx.request.body;
 
-  if (!isValidCustomer(message.customer)) {
+  if (!message.customer) {
+    message.customer = Config.defaultCustomer;
+  } else if (!isValidCustomer(message.customer)) {
     ctx.status = 400;
     ctx.body = { code: 400, message: 'Invalid customer ID' };
+    return;
   }
 
   try {

@@ -21,13 +21,14 @@ interface Config {
 
   /**
    * At least this customer will always be present in the /metrics output.
+   * It will also reap messages that do not specify the customer.
    */
   defaultCustomer: string;
 
   /**
-   * Sent as the sender number unless specified in the message.
+   * Used as the sender number unless specified in the message.
    */
-  defaultSender: string;
+  defaultSender?: string;
 
   listen: {
     port: number;
@@ -57,7 +58,7 @@ function makeConfig(env: typeof process.env = process.env): Config {
     },
     defaultBackend: process.env.SMSGW_DEFAULT_BACKEND || 'mock',
     defaultCustomer: process.env.SMSGW_DEFAULT_CUSTOMER || 'leonidas',
-    defaultSender: process.env.SMSGW_DEFAULT_SENDER || '0',
+    defaultSender: process.env.SMSGW_DEFAULT_SENDER,
     listen: {
       address: process.env.SMSGW_LISTEN_ADDRESS || '127.0.0.1',
       port: parseInt(process.env.SMSGW_LISTEN_PORT || '3000', 10),

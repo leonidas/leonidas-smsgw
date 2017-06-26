@@ -21,8 +21,7 @@
     "required": [
         "customer",
         "message",
-        "recipients",
-        "sender"
+        "recipients"
     ],
     "type": "object"
 }

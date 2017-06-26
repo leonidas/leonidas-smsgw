@@ -1,4 +1,5 @@
 import * as querystring from 'querystring';
+import fetch from 'node-fetch';
 
 import Config from '../../Config';
 import Logger from '../../services/Logger';
@@ -37,12 +38,11 @@ export function makeFetchOptions(message: SMSMessage): RequestInit {
     source: message.sender || Config.defaultSender,
   };
 
-  const options = {
+  return {
     method: 'POST',
     body: querystring.stringify(form),
+    redirect: 'error',
   };
-
-  return options;
 }
 
 

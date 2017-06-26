@@ -1,8 +1,8 @@
 interface SMSMessage {
-  customer: string;
   recipients: string[];
-  sender: string;
   message: string;
+  customer?: string;
+  sender?: string;
 }
 
 

@@ -1,5 +1,36 @@
 stack: santtu-pajukanta-leonidas/smsgw
 version: '0.1.0'
+
+variables:
+  smsgw_session_key:
+    type: string
+    from:
+      vault: ${STACK}_session_key
+      random_string: 63
+    to:
+      vault: ${STACK}_session_key
+  smsgw_admin_password:
+    type: string
+    from:
+      vault: ${STACK}_admin_password
+      random_string: 63
+    to:
+      vault: ${STACK}_admin_password
+  smsgw_prometheus_password:
+    type: string
+    from:
+      vault: prometheus_smsgw_password
+      random_string: 63
+    to:
+      vault: prometheus_smsgw_password
+  smsgw_user_password:
+    type: string
+    from:
+      vault: ${STACK}_user_password
+      random_string: 63
+    to:
+      vault: ${STACK}_user_password
+
 services:
   api:
     image: registry.plat2.leonidasoy.fi/leonidas-smsgw
@@ -8,6 +39,10 @@ services:
       NODE_ENV: production
       SMSGW_DEFAULT_BACKEND: labyrintti
       SMSGW_REDIS_HOST: redis
+      SMSGW_SESSION_KEY: ${smsgw_session_key}
+      SMSGW_INITIAL_ADMIN_PASSWORD: ${smsgw_admin_password}
+      SMSGW_INITIAL_PROMETHEUS_PASSWORD: ${smsgw_prometheus_password}
+      SMSGW_INITIAL_USER_PASSWORD: ${smsgw_user_password}
 
       KONTENA_LB_MODE: http
       KONTENA_LB_BALANCE: roundrobin

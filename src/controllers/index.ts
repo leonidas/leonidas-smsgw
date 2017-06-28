@@ -3,6 +3,7 @@ import * as KoaRouter from 'koa-router';
 
 import messages from './messages';
 import metrics from './metrics';
+import users from './users';
 
 
 export function getIndex(ctx: Koa.Context) {
@@ -17,6 +18,7 @@ export function makeRouter(): KoaRouter {
 
   messages(router);
   metrics(router);
+  users(router);
 
   return router;
 }

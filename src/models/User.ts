@@ -2,6 +2,7 @@ import { hash, verify } from '../helpers/hash';
 
 import Logger from '../services/Logger';
 import Redis from '../services/Redis';
+import Config from '../Config';
 import { validate } from '../middleware/validation';
 
 
@@ -77,6 +78,55 @@ export async function getUserByUsernameAndPassword(username: string, password: s
 }
 
 
+export async function getAllUsers(): Promise<User[]> {
+  return new Promise<User[]>((resolve, reject) => {
+    Redis.hgetall('users', (err, results) => {
+      if (err) {
+        reject(err);
+      }
+
+      const users: User[] = [];
+
+      Object.keys(results).forEach((username) => {
+        users.push(JSON.parse(results[username]));
+      });
+
+      resolve(users);
+    });
+  });
+}
+
+
+export async function removeUserByUsername(username: string): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    Redis.hdel('users', username, (err) => {
+      if (err) {
+        reject(err);
+      }
+
+      resolve();
+    });
+  });
+}
+
+
+/**
+ * Removes all users. Exercise caution.
+ */
+export async function clearUsers(): Promise<void> {
+  Logger.debug('Deleting all users :)');
+  return new Promise<void>((resolve, reject) => {
+    Redis.del('users', (err) => {
+      if (err) {
+        reject(err);
+      }
+
+      resolve();
+    });
+  });
+}
+
+
 export async function ensureUser(newUser: NewUser): Promise<User> {
   validate(newUser, newUserSchema);
 
@@ -90,7 +140,7 @@ export async function ensureUser(newUser: NewUser): Promise<User> {
     passwordSalt: salted.salt,
   };
 
-  return new Promise<User>((resolve, reject) => {
+  await new Promise<User>((resolve, reject) => {
     Redis.hsetnx('users', user.username, JSON.stringify(user), (err, res) => {
       if (err) {
         reject(err);
@@ -99,6 +149,9 @@ export async function ensureUser(newUser: NewUser): Promise<User> {
       resolve(user);
     });
   });
+
+  // if it existed already, be sure to return the data we have in db
+  return getUserByUsername(newUser.username);
 }
 
 
@@ -127,4 +180,18 @@ export function ensureTestUsers() {
       .map((username) => testUsers[username])
       .map(ensureUser)
   );
+}
+
+
+export function ensureInitialUsers(config: Config = Config) {
+  return Promise.all(config.initialUsers.map(ensureUser));
+}
+
+
+if (typeof beforeEach !== 'undefined') {
+  Logger.debug('Users will be reset to testUsers in beforeEach');
+  beforeEach(async () => {
+    await clearUsers();
+    await ensureTestUsers();
+  });
 }

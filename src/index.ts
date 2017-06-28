@@ -12,6 +12,7 @@ import validationMiddleware from './middleware/validation';
 import setupPassport from './middleware/authentication';
 import Logger, { requestLogger } from './services/Logger';
 import RedisStore from './services/RedisStore';
+import { ensureInitialUsers } from './models/User';
 
 
 export type Context = Koa.Context & KoaRouter.IRouterContext & passport.Context;
@@ -48,9 +49,15 @@ const app = makeApp();
 export default app;
 
 
-export function start(config: Config = Config) {
+export function getServer(config: Config = Config) {
   const { address, port } = config.listen;
 
   Logger.info(`Starting smsgw at ${address}:${port}`, config);
   return app.listen(port, address);
+}
+
+
+export async function start() {
+  await ensureInitialUsers();
+  return getServer();
 }

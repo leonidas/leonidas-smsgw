@@ -1,5 +1,5 @@
 import * as supertest from 'supertest';
-import { start } from '..';
+import { getServer } from '..';
 import { testUsers, NewUser } from '../models/User';
 
 
@@ -24,15 +24,11 @@ export function send(body: any, user: NewUser = testUsers.user): any {
 // tslint:disable-next-line:no-any
 let server: any = null;
 
-export function getServer() {
-  if (!server) {
-    server = start();
-  }
-
-  return server;
-}
-
 
 export function request() {
-  return supertest(getServer());
+  if (!server) {
+    server = getServer();
+  }
+
+  return supertest(server);
 }

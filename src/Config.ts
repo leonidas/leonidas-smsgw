@@ -1,5 +1,7 @@
 import * as winston from 'winston';
 
+import { NewUser } from './models/User';
+
 
 type NodeEnv = 'development' | 'production' | 'test';
 type Backend = 'labyrintti' | 'mock';
@@ -46,6 +48,12 @@ interface Config {
   session: {
     key: string;
   };
+
+  /**
+   * Initial admin user that will be created if it does not exist.
+   * Note that the password will not be changed if it already exists.
+   */
+  initialUsers: NewUser[];
 }
 
 
@@ -60,6 +68,24 @@ function makeConfig(env: typeof process.env = process.env): Config {
       throw new Error('SMSGW_SESSION_KEY must be set in production environments');
     }
   }
+
+  const initialUsers: NewUser[] = [
+    {
+      username: process.env.SMSGW_INITIAL_ADMIN_USERNAME || 'admin',
+      password: process.env.SMSGW_INITIAL_ADMIN_PASSWORD,
+      roles: ['admin'],
+    },
+    {
+      username: process.env.SMSGW_INITIAL_PROMETHEUS_USERNAME || 'prometheus',
+      password: process.env.SMSGW_INITIAL_PROMETHEUS_PASSWORD,
+      roles: ['prometheus'],
+    },
+    {
+      username: process.env.SMSGW_INITIAL_USER_USERNAME || 'leonidas',
+      password: process.env.SMSGW_INITIAL_USER_PASSWORD,
+      roles: ['send'],
+    },
+  ].filter((newUser) => newUser.password);
 
   return {
     backends: {
@@ -87,6 +113,7 @@ function makeConfig(env: typeof process.env = process.env): Config {
     session: {
       key: sessionKey,
     },
+    initialUsers,
   };
 }
 

@@ -2,7 +2,6 @@ import * as redis from 'redis';
 
 import Config from '../Config';
 import Logger from '../services/Logger';
-import { ensureTestUsers } from '../models/User';
 
 
 export function createClient(config: Config = Config): redis.RedisClient {
@@ -21,14 +20,7 @@ if (typeof before !== 'undefined') {
       Logger.error('Error while connecting to Redis', err);
       done(err);
     });
-    Redis.on('ready', async () => {
-      await ensureTestUsers();
-      done();
-    });
+    Redis.on('ready', () => done());
   });
 }
 
-if (typeof beforeEach !== 'undefined') {
-  Logger.debug('Setting up redis clear hook for testing');
-  beforeEach((done) => Redis.del('smsgw_messages', (err, res) => done(err)) );
-}

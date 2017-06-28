@@ -10,3 +10,9 @@ export async function recordMessage(message: SMSMessage) {
   Logger.debug('recordMessage', message);
   Redis.hincrby('smsgw_messages', customer, message.recipients.length);
 }
+
+
+if (typeof beforeEach !== 'undefined') {
+  Logger.debug('smsgw_messages will be cleared in Redis in beforeEach');
+  beforeEach((done) => Redis.del('smsgw_messages', (err, res) => done(err)) );
+}

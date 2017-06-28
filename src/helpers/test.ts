@@ -1,5 +1,6 @@
 import * as supertest from 'supertest';
 import { start } from '..';
+import { testUsers, NewUser } from '../models/User';
 
 
 export const message = {
@@ -11,10 +12,11 @@ export const message = {
 
 
 // tslint:disable-next-line:no-any
-export function send(body: any): any {
+export function send(body: any, user: NewUser = testUsers.user): any {
   return request()
     .post('/api/v1/messages')
     .set('Content-Type', 'application/json')
+    .auth(user.username, user.password)
     .send(body);
 }
 

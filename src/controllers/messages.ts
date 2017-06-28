@@ -7,7 +7,7 @@ import SMSMessage from '../models/SMSMessage';
 import { recordMessage } from '../services/Accounting';
 import { sendMessage } from '../services/Messaging';
 import Config from '../Config';
-
+import { basicAuthRequired, roleRequired } from '../middleware/authentication';
 
 const messageSchema = require('../schemas/SMSMessage.json');
 
@@ -40,5 +40,11 @@ export async function postMessage(ctx: Koa.Context) {
 
 
 export default function initialize(router: KoaRouter) {
-  router.post('/api/v1/messages', postMessage);
+  router.post(
+    'postMessage',
+    '/api/v1/messages',
+    basicAuthRequired(),
+    roleRequired('send'),
+    postMessage
+  );
 }

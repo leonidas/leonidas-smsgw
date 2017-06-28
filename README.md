@@ -1,6 +1,16 @@
 # Leonidas SMS gateway
 
-Counts messages per customer.
+## Features
+
+* Provides a single integration point for whatever SMS service we will be using in the future
+* Counts messages by customer (hierarchically, customers-of-customers supported to an arbitrary depth)
+
+## Supported backends
+
+Please submit further backends via pull requests.
+
+* **Labyrintti/LINK Mobility**: Untested. Should become usable in early July 2017.
+* **Mock**: Useful for testing.
 
 ## Getting Started
 

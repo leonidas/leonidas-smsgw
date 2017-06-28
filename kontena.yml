@@ -16,6 +16,8 @@ variables:
       random_string: 63
     to:
       vault: ${STACK}_admin_password
+
+  # this secret is actually part of the prometheus stack, hence hardcoded name
   smsgw_prometheus_password:
     type: string
     from:
@@ -23,6 +25,7 @@ variables:
       random_string: 63
     to:
       vault: prometheus_smsgw_password
+
   smsgw_user_password:
     type: string
     from:

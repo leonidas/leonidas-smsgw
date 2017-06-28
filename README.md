@@ -49,6 +49,7 @@ Successful response (`201 Created`):
         "statusMessage": "1 message succesfully queued for sending"
     }]
 }
+```
 
 ### `/api/v1/users`
 

@@ -19,6 +19,10 @@ Have a Redis running on port 6379. All your base are belong to us.
     yarn start
     yarn test
 
+## Configuration
+
+Via environment variables. See [Config.ts](https://github.com/leonidas/leonidas-smsgw/blob/master/src/Config.ts).
+
 ## API
 
 ### POST `/api/v1/messages`
@@ -34,7 +38,21 @@ Body:
 }
 ```
 
-Empty 204 response indicates successful sending.
+Successful response (`201 Created`):
+
+```json
+{
+    "success": true,
+    "recipients": [{
+        "recipient": "+3585551235",
+        "success": "true",
+        "statusMessage": "1 message succesfully queued for sending"
+    }]
+}
+
+### `/api/v1/users`
+
+CRUD user management. See [users.test.ts](https://github.com/leonidas/leonidas-smsgw/blob/master/src/controllers/users.test.ts) until properly documented.
 
 ### GET `/metrics`
 

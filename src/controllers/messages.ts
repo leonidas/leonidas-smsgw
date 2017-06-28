@@ -4,6 +4,7 @@ import * as KoaRouter from 'koa-router';
 import isValidCustomer from '../helpers/isValidCustomer';
 import { validate } from '../middleware/validation';
 import SMSMessage from '../models/SMSMessage';
+import Result from '../models/Result';
 import { recordMessage } from '../services/Accounting';
 import { sendMessage } from '../services/Messaging';
 import Config from '../Config';
@@ -25,17 +26,21 @@ export async function postMessage(ctx: Koa.Context) {
     return;
   }
 
+  let result: Result;
   try {
-    await sendMessage(message);
+    result = await sendMessage(message);
   } catch (err) {
+    // TODO better general error reporting
     ctx.status = 500;
-    ctx.body = { code: 500, message: 'Failed to send' };
+    ctx.body = { success: false, recipients: [] };
     return;
   }
 
   await recordMessage(message);
 
-  ctx.body = { code: 200, message: 'Message sent successfully' };
+  // TODO other result code than 207 for "all failed"
+  ctx.body = result;
+  ctx.status = result.success ? 201 : 207;
 }
 
 

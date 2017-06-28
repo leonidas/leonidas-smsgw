@@ -4,6 +4,7 @@ import * as KoaRouter from 'koa-router';
 import Config from '../Config';
 import formatMetrics from '../helpers/formatMetrics';
 import Redis from '../services/Redis';
+import { basicAuthRequired, roleRequired } from '../middleware/authentication';
 
 
 async function getMetrics(ctx: Koa.Context) {
@@ -25,5 +26,11 @@ async function getMetrics(ctx: Koa.Context) {
 
 
 export default function initialize(router: KoaRouter) {
-  router.get('/metrics', getMetrics);
+  router.get(
+    'getMetrics',
+    '/metrics',
+    basicAuthRequired(),
+    roleRequired('prometheus'),
+    getMetrics
+  );
 }

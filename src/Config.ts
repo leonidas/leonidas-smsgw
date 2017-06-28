@@ -38,15 +38,28 @@ interface Config {
     host: string;
     port: number;
     prefix: string;
-    db?: string;
+    db: string;
   };
   nodeEnv: NodeEnv;
   logLevel: winston.CLILoggingLevel;
+
+  session: {
+    key: string;
+  };
 }
 
 
 function makeConfig(env: typeof process.env = process.env): Config {
   const nodeEnv: NodeEnv = process.env.NODE_ENV || 'development';
+
+  let sessionKey: string = process.env.SMSGW_SESSION_KEY || '';
+  if (!sessionKey) {
+    if (['development', 'test'].indexOf(nodeEnv) >= 0) {
+      sessionKey = 'insecure development session key';
+    } else {
+      throw new Error('SMSGW_SESSION_KEY must be set in production environments');
+    }
+  }
 
   return {
     backends: {
@@ -70,7 +83,10 @@ function makeConfig(env: typeof process.env = process.env): Config {
       host: process.env.SMSGW_REDIS_HOST || '127.0.0.1',
       port: parseInt(process.env.SMSGW_REDIS_PORT || 6379, 10),
       prefix: process.env.SMSGW_REDIS_PREFIX || 'smsgw',
-    }
+    },
+    session: {
+      key: sessionKey,
+    },
   };
 }
 

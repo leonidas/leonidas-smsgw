@@ -37,7 +37,7 @@ services:
     instances: 1
     environment:
       NODE_ENV: production
-      SMSGW_DEFAULT_BACKEND: labyrintti
+      SMSGW_DEFAULT_BACKEND: mock
       SMSGW_REDIS_HOST: redis
       SMSGW_SESSION_KEY: ${smsgw_session_key}
       SMSGW_INITIAL_ADMIN_PASSWORD: ${smsgw_admin_password}

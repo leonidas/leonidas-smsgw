@@ -2,6 +2,11 @@ import { hash, verify } from '../helpers/hash';
 
 import Logger from '../services/Logger';
 import Redis from '../services/Redis';
+import { validate } from '../middleware/validation';
+
+
+const newUserSchema = require('../schemas/NewUser.json');
+
 
 export interface User {
   username: string;
@@ -72,7 +77,9 @@ export async function getUserByUsernameAndPassword(username: string, password: s
 }
 
 
-export async function ensureUser(newUser: NewUser) {
+export async function ensureUser(newUser: NewUser): Promise<User> {
+  validate(newUser, newUserSchema);
+
   Logger.debug('Ensuring user exists:', newUser.username);
 
   const salted = await hash(newUser.password);
@@ -83,13 +90,13 @@ export async function ensureUser(newUser: NewUser) {
     passwordSalt: salted.salt,
   };
 
-  return new Promise((resolve, reject) => {
+  return new Promise<User>((resolve, reject) => {
     Redis.hsetnx('users', user.username, JSON.stringify(user), (err, res) => {
       if (err) {
         reject(err);
       }
 
-      resolve(res);
+      resolve(user);
     });
   });
 }

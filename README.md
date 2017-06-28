@@ -7,7 +7,9 @@ Counts messages per customer.
 ### Docker Compose
 
     docker-compose up
-    docker-compose -f docker-compose.test.yml up --exit-code-from=test
+
+    alias dc-test="docker-compose -f docker-compose.test.yml up --exit-code-from=test"
+    dc-test
 
 ### Manually
 

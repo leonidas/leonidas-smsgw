@@ -14,7 +14,7 @@ services:
       NODE_ENV: test
       SMSGW_REDIS_HOST: redis
       SMSGW_REDIS_DB: 1
-      SMSGW_REDIS_PREFIX: tesmsgw
+      SMSGW_REDIS_PREFIX: 'tesmsgw:'
   redis:
     image: redis
     volumes:

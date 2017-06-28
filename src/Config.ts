@@ -108,7 +108,7 @@ function makeConfig(env: typeof process.env = process.env): Config {
       db: process.env.SMSGW_REDIS_DB || '0',
       host: process.env.SMSGW_REDIS_HOST || '127.0.0.1',
       port: parseInt(process.env.SMSGW_REDIS_PORT || 6379, 10),
-      prefix: process.env.SMSGW_REDIS_PREFIX || 'smsgw',
+      prefix: process.env.SMSGW_REDIS_PREFIX || 'smsgw:',
     },
     session: {
       key: sessionKey,

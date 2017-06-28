@@ -80,6 +80,7 @@ smsgw_messages{customer0="leonidas"} 0
 ### Future features
 
 * [ ] JSON endpoint for accounting information (currently only Prometheus metrics provided)
+* [ ] Inbound messages
 * [ ] Restrict sender numbers by user/customer
 * [ ] Restrict customers by user
 * [ ] Configurable per-user rate limiting

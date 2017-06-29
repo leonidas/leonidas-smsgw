@@ -64,7 +64,7 @@ export default async function sendMessage(message: SMSMessage): Promise<Result> 
 
   Logger.debug('labyrintti backend response', result);
 
-  const recipients = result.split('\n').map(handleResultLine);
+  const recipients = result.trim().split('\n').map(handleResultLine);
 
   return {
     success: recipients.every((item) => item.success),

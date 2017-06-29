@@ -38,9 +38,16 @@ services:
   api:
     image: registry.plat2.leonidasoy.fi/leonidas-smsgw
     instances: 1
+    secrets:
+      - name: SMSGW_LABYRINTTI_PASSWORD
+        secret: smsgw_labyrintti_password
+        type: env
+      - name: SMSGW_LABYRINTTI_USERNAME
+        secret: smsgw_labyrintti_username
+        type: env
     environment:
       NODE_ENV: production
-      SMSGW_DEFAULT_BACKEND: mock
+      SMSGW_DEFAULT_BACKEND: labyrintti
       SMSGW_REDIS_HOST: redis
       SMSGW_SESSION_KEY: ${smsgw_session_key}
       SMSGW_INITIAL_ADMIN_PASSWORD: ${smsgw_admin_password}

@@ -53,7 +53,7 @@ services:
       SMSGW_INITIAL_ADMIN_PASSWORD: ${smsgw_admin_password}
       SMSGW_INITIAL_PROMETHEUS_PASSWORD: ${smsgw_prometheus_password}
       SMSGW_INITIAL_USER_PASSWORD: ${smsgw_user_password}
-      SMSGW_LOG_LEVEL: debug
+      # SMSGW_LOG_LEVEL: debug
 
       KONTENA_LB_MODE: http
       KONTENA_LB_BALANCE: roundrobin

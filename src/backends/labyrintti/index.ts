@@ -12,8 +12,11 @@ const resultRegex = /^(.+?) (OK|ERROR) (.+)$/;
 
 
 export function handleResultLine(line: string): RecipientResult {
-  const regexResult = resultRegex.exec(line.trim());
+  line = line.trim();
+
+  const regexResult = resultRegex.exec(line);
   if (!regexResult) {
+    Logger.warn('Unparseable result line from labyrintti:', JSON.stringify(line));
     return {
       recipient: '',
       success: false,

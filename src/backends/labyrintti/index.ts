@@ -38,9 +38,16 @@ export function makeFetchOptions(message: SMSMessage): RequestInit {
     source: message.sender || Config.defaultSender,
   };
 
+  const body = querystring.stringify(form);
+  const headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Content-Length': body.length.toString(),
+  };
+
   return {
+    body,
+    headers,
     method: 'POST',
-    body: querystring.stringify(form),
     redirect: 'error',
   };
 }

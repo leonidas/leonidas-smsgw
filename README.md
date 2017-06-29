@@ -81,6 +81,7 @@ smsgw_messages{customer0="leonidas"} 0
 
 * [ ] JSON endpoint for accounting information (currently only Prometheus metrics provided)
 * [ ] Inbound messages
+* [ ] Mask passwords from logs (perhaps fork/hack `winston-console-formatter` for this)
 * [ ] Restrict sender numbers by user/customer
 * [ ] Restrict customers by user
 * [ ] Configurable per-user rate limiting

@@ -38,7 +38,7 @@ export function makeFetchOptions(message: SMSMessage): RequestInit {
     user: labyrintti.username,
     dests: message.recipients.join(','),
     text: message.message,
-    source: message.sender || Config.defaultSender,
+    'source-name': message.sender || Config.defaultSender,
   };
 
   const body = querystring.stringify(form);

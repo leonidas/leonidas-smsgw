@@ -1,5 +1,7 @@
 # Leonidas SMS gateway
 
+[![Build Status](https://drone.plat2.leonidasoy.fi/api/badges/leonidas/leonidas-smsgw/status.svg)](https://drone.plat2.leonidasoy.fi/leonidas/leonidas-smsgw)
+
 ## Features
 
 * Provides a single integration point for whatever SMS service we will be using in the future
@@ -74,6 +76,14 @@ Response:
 # TYPE smsgw_messages counter
 smsgw_messages{customer0="leonidas"} 0
 ```
+
+## Deployment
+
+This project is using the [Leonidas Platform Drone CI](https://drone.plat2.leonidasoy.fi/leonidas/leonidas-360gateway). All pushes to `master` will trigger a production deployment.
+
+If you need to deploy manually, the command to deploy from your working copy is
+
+    ./deploy.sh
 
 ## TODO
 

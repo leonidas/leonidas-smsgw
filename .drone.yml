@@ -1,0 +1,19 @@
+pipeline:
+  docker:
+    image: plugins/docker
+    registry: registry.plat2.leonidasoy.fi
+    repo: registry.plat2.leonidasoy.fi/leonidas-smsgw
+    secrets: [docker_username, docker_password]
+    tag: latest
+    when:
+      branch: master
+      event: [push]
+
+  deploy:
+    image: registry.plat2.leonidasoy.fi/kontenacli
+    commands:
+      - /docker_entrypoint.sh stack upgrade --deploy smsgw kontena.yml
+    secrets: [master_name, master_url, grid_name, access_token]
+    when:
+      branch: master
+      event: [push]

@@ -46,11 +46,11 @@ describe('makeFetchOptions', () => {
 
     const decodedForm = querystring.parse(actual.body);
     assert.deepEqual(decodedForm, {
-      dests: '+3585551235',
-      user: 'testuser',
-      password: 'testpassword',
-      source: '+3585551234',
-      text: 'Hello, World!',
+      'dests': '+3585551235',
+      'user': 'testuser',
+      'password': 'testpassword',
+      'source-name': '+3585551234',
+      'text': 'Hello, World!',
     });
   });
 });

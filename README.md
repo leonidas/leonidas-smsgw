@@ -11,7 +11,7 @@
 
 Please submit further backends via pull requests.
 
-* **Labyrintti/LINK Mobility**: Untested. Should become usable in early July 2017.
+* **Labyrintti/LINK Mobility**: Production-ready, in production use at Leonidas.
 * **Mock**: Useful for testing.
 
 ## Getting Started
